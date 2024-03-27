@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "40362666707",
+    "project_id": "fir-tutorial-f803c",
+    "storage_bucket": "fir-tutorial-f803c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40362666707:android:c62b4e273234dea6514226",
+        "android_client_info": {
+          "package_name": "com.example.foodsflutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmDaFzimQkgmpGU2wdIo1PE-MFWeqaJgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
