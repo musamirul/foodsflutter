@@ -1,23 +1,20 @@
-import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  final VoidCallback showLoginPage;
+
+  const RegisterScreen({super.key, required this.showLoginPage});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  // text controller
+class _RegisterScreenState extends State<RegisterScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  Future signIn() async{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(email: _emailController.text.trim(), password: _passwordController.text.trim());
-  }
+  final _confirmpasswordController = TextEditingController();
 
   @override
   void dispose() {
@@ -25,6 +22,27 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordController.dispose();
     super.dispose();
   }
+
+  Future signUp() async {
+    if(confirmPassword()){
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+    }
+
+  }
+
+  bool confirmPassword(){
+    if(_passwordController.text.trim() == _confirmpasswordController.text.trim()){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,12 +62,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 20,
               ),
               Text(
-                'Hello Again',
+                'Hello There',
                 style: GoogleFonts.bebasNeue(fontSize: 40),
               ),
               //Welcome Text
               Text(
-                'Welcome Back you have been missed',
+                'Register below with your details',
                 style: TextStyle(fontSize: 18),
               ),
               //TextField email
@@ -67,8 +85,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: TextField(
                     controller: _emailController,
                     decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.deepPurple),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                       border: InputBorder.none,
+                      fillColor: Colors.grey[200],
                       label: Text('Email'),
+                      filled: true,
                     ),
                   ),
                 ),
@@ -88,8 +116,48 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.deepPurple),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                       border: InputBorder.none,
+                      fillColor: Colors.grey[200],
                       label: Text('Password'),
+                      filled: true,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 12,),
+              //Confirm password
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.white),
+                  ),
+                  child: TextField(
+                    controller: _confirmpasswordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.deepPurple),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      border: InputBorder.none,
+                      fillColor: Colors.grey[200],
+                      label: Text('Confirm Password'),
+                      filled: true,
                     ),
                   ),
                 ),
@@ -100,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: GestureDetector(
-                  onTap: signIn,
+                  onTap: signUp,
                   child: Container(
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
@@ -108,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(10)),
                     child: Center(
                       child: Text(
-                        'Sign In',
+                        'Sign Up',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -118,13 +186,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               //not a member please sign in
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Not a member? '),
-                  Text('Register Now', style: TextStyle(color: Colors.blue),),
+                  Text('I am a member! '),
+                  GestureDetector(
+                    onTap: widget.showLoginPage,
+                    child: Text(
+                      'Login Now',
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ),
                 ],
               ),
             ],

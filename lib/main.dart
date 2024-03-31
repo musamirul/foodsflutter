@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:foodsflutter/login_screen.dart';
-import 'package:foodsflutter/main_screen.dart';
+import 'package:foodsflutter/pages/login_screen.dart';
+import 'package:foodsflutter/auth/main_screen.dart';
 import 'firebase_options.dart';
 
 
