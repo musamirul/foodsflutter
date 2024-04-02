@@ -3,9 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'forgot_pw_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   //method for gesture detecor
   final VoidCallback showRegisterPage;
+
   const LoginScreen({super.key, required this.showRegisterPage});
 
   @override
@@ -117,6 +120,34 @@ class _LoginScreenState extends State<LoginScreen> {
                       filled: true,
                     ),
                   ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ForgotPasswordScreen();
+                            },
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Forgot Password',
+                        style: TextStyle(
+                            color: Colors.blue, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
